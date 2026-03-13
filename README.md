@@ -47,6 +47,12 @@ The EC2 instance is bootstrapped with Docker via `user_data` and is ready to run
 
 ---
 
+## Dynamic AMI Selection for Region Agnosticism
+
+To ensure the solution is region-agnostic, the Terraform configuration dynamically fetches the latest Ubuntu AMI using the `aws_ami` data source. This approach avoids hardcoding AMI IDs, which vary by region, and allows the infrastructure to be deployed in any AWS region without modification. The AMI is selected based on filters for the desired OS version and owner, making the setup robust and portable across regions.
+
+---
+
 ## CI/CD Pipeline (GitHub Actions)
 
 The workflow automates:
@@ -66,12 +72,3 @@ The workflow automates:
 3. **Infrastructure as Code**: Reproducible, version-controlled AWS setup.
 4. **Security**: Uses KMS for EBS encryption, restricts access via security groups.
 5. **Automation**: GitHub Actions for seamless build and deployment.
-
----
-
-## Notes
-
-- The EBS volume is attached to the EC2 instance but not auto-formatted/mounted on every boot to prevent data loss.
-- The public IP output from Terraform should be used to configure the CI/CD pipeline.
-- Ensure AWS credentials and SSH keys are managed securely.
-
