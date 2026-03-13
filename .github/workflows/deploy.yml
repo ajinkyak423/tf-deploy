@@ -33,10 +33,9 @@ jobs:
     steps:
       - name: SSH into EC2 and update run
         env:
-          PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           HOST: ${{ secrets.EC2_PUBLIC_IP }}
         run: |
-          echo "$PRIVATE_KEY" > private_key.pem
+          echo ${{ secrets.SSH_PRIVATE_KEY }} > private_key.pem
           chmod 600 private_key.pem
 
           ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@${{ env.HOST }}<< 'EOF'
