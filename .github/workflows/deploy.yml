@@ -23,7 +23,6 @@ jobs:
 
       - name: Build and Push
         run: |
-          cd ${GITHUB_WORKSPACE}/tf-deploy/app
           docker build -t ${{ env.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }} .
           docker push ${{ env.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
