@@ -31,18 +31,14 @@ jobs:
     runs-on: ubuntu-latest
     if:  contains(github.ref, 'main')
     steps:
-      - name: SSH into EC2 and update run
-        env:
-          HOST: ${{ secrets.EC2_PUBLIC_IP }}
-        run: |
-          echo ${{ secrets.SSH_PRIVATE_KEY }} > private_key.pem
-          chmod 600 private_key.pem
-
-          ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@${{ env.HOST }}<< 'EOF'
-
+      - name: SSH into EC2 and update
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_PUBLIC_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
             docker pull ${{ env.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
             docker stop flask-app || true
             docker rm flask-app || true
-            docker run -d -p 8081:8081 --name flask-app --restart always ${{ env.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          EOF
-          rm private_key.pem
+            docker run -d -p 8081:8081 --restart always --name flask-app ${{ env.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
