@@ -61,7 +61,15 @@ The workflow automates:
 2. **Deploy to EC2**: SSHs into the EC2 instance and pulls the latest image, then restarts the container.
 3. **Conditional Build and Deploy**: Build can be triggered using BUILD_CONTAINER_IMAGE sting in commit message else it will be auto triggered once merged in main branch along with deploy workflow.
 
+---
 
+## Improvements
+
+- **CI/CD for Terraform Infrastructure**: To further automate and secure infrastructure changes, implement a dedicated CI/CD pipeline for Terraform code. This pipeline can:
+  - Run `terraform plan` and `terraform apply` automatically on infrastructure code changes.
+  - Use remote state management with AWS S3 (for storing the Terraform state file) and DynamoDB (for state locking and consistency).
+  - Enforce approval workflows and provide visibility into infrastructure changes before they are applied.
+  - Improve collaboration, traceability, and reduce the risk of manual errors in infrastructure management.
 
 ---
 
