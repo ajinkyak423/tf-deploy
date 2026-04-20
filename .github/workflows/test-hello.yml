@@ -1,7 +1,6 @@
 name: test-hello
 
 on:
-  workflow_dispatch:
   schedule:
     # every hour at minute 11 (picking odd minutes to prevent potential
     # overlap of scheduled github action load)
