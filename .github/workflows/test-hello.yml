@@ -1,0 +1,43 @@
+name: test-hello
+
+on:
+  workflow_dispatch:
+  schedule:
+    # every hour at minute 11 (picking odd minutes to prevent potential
+    # overlap of scheduled github action load)
+    - cron: "*/10 * * * *"
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  hello-job-1:
+    name: hello-job-1
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Say hello
+        run: echo "hello ajinkya hi"
+
+  hello-job-2:
+    name: hello-job-2
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Say hello
+        run: echo "hello ajinkya hi"
+
+  hello-job-3:
+    name: hello-job-3
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Say hello
+        run: echo "hello ajinkya hi"
